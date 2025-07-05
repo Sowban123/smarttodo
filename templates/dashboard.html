@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Todo Dashboard</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #0077cc;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar h2 {
+      color: #fff;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 36px;
+      margin: 30px 0;
+    }
+
+    .task-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+    }
+
+    .task-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .task-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .task-title {
+      font-size: 22px;
+      margin: 0;
+      color: #222;
+    }
+
+    .priority {
+      padding: 3px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin-left: 10px;
+      text-transform: capitalize;
+    }
+
+    .high {
+      background-color: #ff4d4d;
+      color: white;
+    }
+
+    .medium {
+      background-color: #ffb84d;
+      color: white;
+    }
+
+    .low {
+      background-color: #5cd65c;
+      color: white;
+    }
+
+    .task-desc {
+      margin: 10px 0;
+      color: #555;
+    }
+
+    .category {
+      font-style: italic;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h2> SMART TODO LIST</h2>
+    <div class="nav-links">
+      <nav>
+  <a href="/">Dashboard</a> 
+  <a href="/add-task/">Add Task</a> 
+  <a href="/add-context/">Add Context</a>
+</nav>
+
+    </div>
+  </div>
+
+  <h1>Smart Todo Dashboard</h1>
+
+  <div class="task-container" id="task-list">
+    <!-- Tasks will load here -->
+  </div>
+
+  <script>
+    fetch('/api/tasks/')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('task-list');
+        data.forEach(task => {
+          const div = document.createElement('div');
+          div.className = "task-card";
+          div.innerHTML = `
+            <h3 class="task-title">
+              ${task.title}
+              <span class="priority ${task.priority.toLowerCase()}">${task.priority}</span>
+            </h3>
+            <p class="task-desc">${task.description}</p>
+            <p class="category">Category: ${task.category?.name || "Uncategorized"}</p>
+          `;
+          list.appendChild(div);
+        });
+      })
+      .catch(error => {
+        document.getElementById('task-list').innerHTML = "<p style='color:red;'>Failed to load tasks. Make sure your backend is running.</p>";
+        console.error(error);
+      });
+  </script>
+</body>
+</html>

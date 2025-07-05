@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Context - Smart Todo</title>
+  <style>
+    /* Navbar */
+    .navbar {
+      background-color: #0077cc;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar h2 {
+      color: #fff;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .nav-links nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    .nav-links nav a:hover {
+      text-decoration: underline;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: #eef2f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      margin: 40px auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .success {
+      margin-top: 15px;
+      text-align: center;
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h2>SMART TODO LIST</h2>
+    <div class="nav-links">
+      <nav>
+        <a href="/">Dashboard</a> 
+        <a href="/add-task/">Add Task</a> 
+        <a href="/add-context/">Add Context</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Add Context Entry</h1>
+    <form id="context-form">
+      <textarea id="content" placeholder="Type message, email, or note..." required></textarea>
+      <select id="source">
+        <option value="email">Email</option>
+        <option value="whatsapp">WhatsApp</option>
+        <option value="note">Note</option>
+      </select>
+      <button type="submit">Add Context</button>
+    </form>
+    <div class="success" id="success-message"></div>
+  </div>
+
+  <script>
+    document.getElementById('context-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const content = document.getElementById('content').value;
+      const source = document.getElementById('source').value;
+
+      try {
+        await fetch('/api/context/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content, source })
+        });
+
+        document.getElementById('success-message').innerText = "✅ Context added successfully!";
+        document.getElementById('content').value = '';
+        document.getElementById('source').value = 'email';
+      } catch (error) {
+        document.getElementById('success-message').innerText = "❌ Failed to add context.";
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
