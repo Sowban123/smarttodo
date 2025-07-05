@@ -27,7 +27,7 @@ smarttodo/
 │ ├── models.py
 │ ├── views.py
 │ ├── serializers.py
-│ ├── urls.py
+│ ├── urls.py!
 │ ├── templates/
 │ │ ├── dashboard.html
 │ │ ├── add-task.html
@@ -76,8 +76,15 @@ deadline: auto-generated future date
 enhanced_description: improved summary
 
 Task is saved to /api/tasks/ using AI suggestions.
+  ##
 
 
+SCREENSHOTS:
+
+![Screenshot 2025-07-05 201930](https://github.com/user-attachments/assets/82cbe056-2f1a-4f8a-b2f5-6ba0f6eab3e0)
+
+![Screenshot 2025-07-05 200116](https://github.com/user-attachments/assets/0f2d1bf6-4c8f-4f78-9497-269023aa0bb4)
+![Screenshot 2025-07-05 200146](https://github.com/user-attachments/assets/13420726-7390-40bf-882f-bcf681d76ac0)
 ---
 
 ## ⚙️ Installation & Setup
@@ -99,6 +106,7 @@ pip install django djangorestframework
 
 python manage.py makemigrations
 python manage.py migrate
+![Screenshot 2025-07-05 201930](https://github.com/user-attachments/assets/6ca582a8-01da-4a32-b2e7-bb683abfe6e9)
 
 python manage.py createsuperuser
 
